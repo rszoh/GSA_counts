@@ -387,16 +387,17 @@ set.seed(1)
   M=5
   alpha0 <- 1
   p = 30
-  n1 = 10 
-  n2 = 10
-  parm0 <-c(0,10,.977)
+  n1 = 20 
+  n2 = 20
+  parm0 <-c(0,1,.977)
   phiC_nw <- rep(0,p)
   phiC_new <- rnorm(p)
   Cii <- 1:p
   Sig<- diag(rep(1,p))
   delt0 <- rep(0,p)
   X <- rmnorm(n=n1,mean=rep(0,p),varcov = Sig)
-  Y <- rmnorm(n=n2,mean=rep(0,p),varcov = Sig)
+  meany <- c(1,1,rep(0,p-2))
+  Y <- rmnorm(n=n2,mean=meany,varcov = Sig)
   
   out <- Loglikhodfunc_knSig(1,1,X,Y,Sig,delt0) 
   out0 <- UpdatCi_alg8_KnSig2(X,Y,phiC_new,alpha0,parm0,M=3,Sig)
@@ -404,7 +405,8 @@ set.seed(1)
   Post_delt_KnSig(out0[1],X,Y,parm0,Sig,out0)
   out1 <- McMUp_alg8KnSig2(X,Y,out0,Nsam,alpha0,parm0,M,Sig) 
  mean(rowSums(out1==0)==ncol(out1)) 
-  colMeans(out1==0)
+ mean(rowSums(cbind(out1[,1]!=0,out1[,2]!=0,out1[,-c(1:2)]==0))==ncol(out1))
+  colMeans(out1)
   plot(out1[1:100,1],type="s")
   
 out <- Loglikhodfunc_knSig(1,1,X,Y,Sig,delt0) 

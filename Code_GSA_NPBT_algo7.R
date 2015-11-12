@@ -290,12 +290,12 @@ meany <- c(10,10,rep(0,p-2))
 Y <- rmnorm(n=n2,mean=meany,varcov = Sig)
 
 
-UpdatCi_alg7_10(X,Y,phiC_nw,alpha0,parm0,Sig)
+UpdatCi_alg7_10(X,Y,phiC_nw,alpha0,parm0,Sig) 
 UpdatCi_alg7_20(X,Y,phiC_nw,alpha0,parm0,Sig)
 
 out <- McMUp_alg70(X,Y,phiC_nw,Nsam,alpha0,parm0,Sig)
 
-mean(rowSums(out==0)==ncol(out)) 
+mean(rowSums(out==0)==ncol(out))  
 mean(rowSums(cbind(out[,1]!=0,out[,2]!=0,out[,-c(1:2)]==0))==ncol(out))
 
 colMeans(out==0)
