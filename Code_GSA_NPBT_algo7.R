@@ -276,8 +276,8 @@ Nsam <- 10000
 M=3
 alpha0 <- 1
 p = 30
-n1 = 10 
-n2 = 10
+n1 = 20 
+n2 = 20
 parm0 <-c(0,5,.95)
 phiC_nw <- rnorm(p)
 phiC_nw <- rep(0,p)
