@@ -383,20 +383,22 @@ McMUp_alg8KnSig2 <- function(X,Y,phiC,Nsam,alpha0,parm0,M,Sig0){
 #####################################################
 #Examples
 set.seed(1)
-  Nsam <- 10000
+  Nsam <- 5000
   M=5
   alpha0 <- 1
   p = 30
-  n1 = 20 
-  n2 = 20
-  parm0 <-c(0,1,.977)
+  n1 = 10 
+  n2 = 10
+  parm0 <-c(0,3,.977)
   phiC_nw <- rep(0,p)
   phiC_new <- rnorm(p)
   Cii <- 1:p
   Sig<- diag(rep(1,p))
   delt0 <- rep(0,p)
   X <- rmnorm(n=n1,mean=rep(0,p),varcov = Sig)
-  meany <- c(1,1,rep(0,p-2))
+  q <- 2
+    mu2 <-2 
+  meany <- c(rep(mu2,q),rep(0,p-q))
   Y <- rmnorm(n=n2,mean=meany,varcov = Sig)
   
   out <- Loglikhodfunc_knSig(1,1,X,Y,Sig,delt0) 
@@ -418,9 +420,6 @@ UpdatCi_alg8_KnSig(out0$ci,X,Y,out0$Phic,alpha0,parm0,M=3,Sig)
 Post_delt_KnSig(X,Y,out0$Phic[1],out0$ci,parm0,Sig,out0$Phic[out0$ci])
 out1 <- McMUp_alg8KnSig(Cii,X,Y,phiC_new[Cii],Nsam,alpha0,parm0,M,Sig) 
 
-
-  
-  
 out <- Loglikhodfunc(1,1,X,Y,Sig,delt0) 
 out0 <- UpdatCi_alg8(Cii,X,Y,phiC_nw,alpha0,parm0,M=3,Sig)
 out1 <- McMUp_alg8(Cii,X,Y,phiC_nw,Nsam,alpha0,parm0,M,Sig) 
