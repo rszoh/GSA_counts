@@ -389,7 +389,7 @@ set.seed(1)
   p = 30
   n1 = 10 
   n2 = 10
-  parm0 <-c(0,3,.977)
+  parm0 <-c(0,5,.977)
   phiC_nw <- rep(0,p)
   phiC_new <- rnorm(p)
   Cii <- 1:p
@@ -397,7 +397,7 @@ set.seed(1)
   delt0 <- rep(0,p)
   X <- rmnorm(n=n1,mean=rep(0,p),varcov = Sig)
   q <- 2
-    mu2 <-2 
+    mu2 <-5 
   meany <- c(rep(mu2,q),rep(0,p-q))
   Y <- rmnorm(n=n2,mean=meany,varcov = Sig)
   
