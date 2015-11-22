@@ -406,7 +406,7 @@ set.seed(1)
   out0
   Post_delt_KnSig(out0[1],X,Y,parm0,Sig,out0)
   out1 <- McMUp_alg8KnSig2(X,Y,out0,Nsam,alpha0,parm0,M,Sig) 
- mean(rowSums(out1==0)==ncol(out1)) 
+ mean(rowSums(out1==0)==ncol(out1))  
  mean(rowSums(cbind(out1[,1]!=0,out1[,2]!=0,out1[,-c(1:2)]==0))==ncol(out1))
   colMeans(out1)
   plot(out1[1:100,1],type="s")
