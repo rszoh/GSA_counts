@@ -4,7 +4,7 @@
 require(MCMCpack)
 require(matlab)
 require(mnormt)
-
+require(Matrix)
 
 Loglikhodfunc<- function(val,i,X,Y,Sig,delt0){ ## 
   n1 <- nrow(X)
@@ -389,7 +389,7 @@ set.seed(1)
   p = 30
   n1 = 10 
   n2 = 10
-  parm0 <-c(0,5,.977)
+  parm0 <-c(0,5,.977) ## sig0  = parm0[2], where sig0 is the variance
   phiC_nw <- rep(0,p)
   phiC_new <- rnorm(p)
   Cii <- 1:p
@@ -406,16 +406,17 @@ set.seed(1)
   out0
   Post_delt_KnSig(out0[1],X,Y,parm0,Sig,out0)
   out1 <- McMUp_alg8KnSig2(X,Y,out0,Nsam,alpha0,parm0,M,Sig) 
- mean(rowSums(out1==0)==ncol(out1))  
- mean(rowSums(cbind(out1[,1]!=0,out1[,2]!=0,out1[,-c(1:2)]==0))==ncol(out1))
-  colMeans(out1)
-  plot(out1[1:100,1],type="s")
+  mean(rowSums(out1==0)==ncol(out1))  
+
+#   mean(rowSums(cbind(out1[,1]!=0,out1[,2]!=0,out1[,-c(1:2)]==0))==ncol(out1))
+#   colMeans(out1)
+#   plot(out1[1:100,1],type="s")
   
-out <- Loglikhodfunc_knSig(1,1,X,Y,Sig,delt0) 
-out0 <- UpdatCi_alg8_KnSig(Cii,X,Y,phiC_new,alpha0,parm0,M=3,Sig)
-out0$ci
-out0$Phic
-UpdatCi_alg8_KnSig(out0$ci,X,Y,out0$Phic,alpha0,parm0,M=3,Sig)
+# out <- Loglikhodfunc_knSig(1,1,X,Y,Sig,delt0) 
+# out0 <- UpdatCi_alg8_KnSig(Cii,X,Y,phiC_new,alpha0,parm0,M=3,Sig)
+# out0$ci
+# out0$Phic
+# UpdatCi_alg8_KnSig(out0$ci,X,Y,out0$Phic,alpha0,parm0,M=3,Sig)
 
 Post_delt_KnSig(X,Y,out0$Phic[1],out0$ci,parm0,Sig,out0$Phic[out0$ci])
 out1 <- McMUp_alg8KnSig(Cii,X,Y,phiC_new[Cii],Nsam,alpha0,parm0,M,Sig) 
