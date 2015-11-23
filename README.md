@@ -7,3 +7,5 @@ Author: "Roger Zoh"
  
 # Mean testing using BNP
 We make use of the BNP to test difference between two high dimensonal means. We make use of the idea of clustering.
+
+ + 11/23/15 - Set up simualtion for the case 1 of the RMBPT paper assuming various values of p0 and looking at the case where mu2/sig0 varies for fied values of sig0. I wrote two function staring with Test_based_on_clustering_Power_analysis_wrt_mu2.R. Again all of this is done assuming know covariance matrix!
