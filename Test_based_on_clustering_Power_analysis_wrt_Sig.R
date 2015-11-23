@@ -8,7 +8,8 @@ idf = as.numeric(cmdArgs)
 #set.seed(idf)
 #% Simulation Code
 #% For the Group 
-#%
+#% In this code we assume a true block-diagonal matrix but assume an identity
+#% when computing the test
 ########################################
 path <- "/share_home/rszoh/test_R_script/GSA_counts"
 setwd(path)
@@ -17,12 +18,15 @@ source("Code_GSA_NPBT.R")
 ## Proportion of elements of true mean that are zero
 
 p0 <- c(0,.01,.05,.5)
+mu2vl <- sqrt(10)*c(.1,.5,1.5,3)
+parm <- rbind(c(0.0),expand.grid(p0[-1],mu2vl))
+
 p <- 200
 n1 <- 50
 n2 <- 50
 
 ### Sigma1 
-B <- .85*eye(25,25) + .15*ones(25,25)
+B <- .25*eye(25,25) + .75*ones(25,25)
 Sig <- as.matrix(bdiag(B,B,B,B))
 Sig <- kronecker(eye(8),B)
 
@@ -48,18 +52,18 @@ res <- foreach(icount(N),.combine=rbind)%dopar%{
   phiC_nw <- rep(0,p)
   phiC_new <- rnorm(p)
   Cii <- 1:p
-  #Sig<- diag(rep(1,p))
+  Sig<- diag(rep(1,p))
   delt0 <- rep(0,p)
   X <- rmnorm(n=n1,mean=rep(0,p),varcov = Sig)
-  q <- floor(p*(p0[idf]))
-  mu2 <- 5 
+  q <- floor(p*(parm[idf,1]))
+  mu2 <- parm[idf,2] 
   if(q>0){meany <- c(rep(mu2,q),rep(0,p-q))} else{
     meany <- rep(0,p)
   }
   Y <- rmnorm(n=n2,mean=meany,varcov = Sig)
   out1 <-  McMUp_alg8KnSig2(X,Y,phiC_nw,Nsam,alpha0,parm0,M,Sig)
-  if(q > 0){c(p0[idf],mu2,mean(rowSums(cbind(out1[,1:q]!=0,out1[,-c(1:q)]==0))==ncol(out1)),colMeans(out1))} else {
-    c(p0[idf],mu2,mean(rowSums(out1==0)==ncol(out1)),colMeans(out1))
+  if(q > 0){c(p0[idf,1],mu2,mean(rowSums(cbind(out1[,1:q]!=0,out1[,-c(1:q)]==0))==ncol(out1)),colMeans(out1))} else {
+    c(p0[idf,1],mu2,mean(rowSums(out1==0)==ncol(out1)),colMeans(out1))
   } 
 }
 
@@ -75,4 +79,3 @@ loc <- paste(path_maj,"Test_Based_on_Clustering/wrt_p0",sep="")
 write.csv(res,file=paste(loc,"/Out_",p0[idf],".csv",sep=""))
 
 cat("\n ** Done saving output ** \n")
-
