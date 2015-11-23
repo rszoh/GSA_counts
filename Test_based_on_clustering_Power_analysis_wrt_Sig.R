@@ -27,7 +27,7 @@ n2 <- 50
 
 ### Sigma1 
 B <- .25*eye(25,25) + .75*ones(25,25)
-Sig <- as.matrix(bdiag(B,B,B,B))
+#Sig <- as.matrix(bdiag(B,B,B,B))
 Sig <- kronecker(eye(8),B)
 
 N = 50 ## number of samples
@@ -74,8 +74,8 @@ colnames(res) <- c("P0","mu2","Prob_true", paste("parm",1:p,sep=""))
 path_maj <-"/data/rszoh/"
 
 dir.create(paste(path_maj,"Test_Based_on_Clustering",sep=""),showWarnings=FALSE)
-dir.create(paste(path_maj,"Test_Based_on_Clustering/wrt_p0",sep=""),showWarnings=FALSE)
-loc <- paste(path_maj,"Test_Based_on_Clustering/wrt_p0",sep="") 
-write.csv(res,file=paste(loc,"/Out_",p0[idf],".csv",sep=""))
+dir.create(paste(path_maj,"Test_Based_on_Clustering/wrt_Sig",sep=""),showWarnings=FALSE)
+loc <- paste(path_maj,"Test_Based_on_Clustering/wrt_Sig",sep="") 
+write.csv(res,file=paste(loc,"/Out_",parm[idf,1],"_",round(parm[idf,2],2),".csv",sep=""))
 
 cat("\n ** Done saving output ** \n")

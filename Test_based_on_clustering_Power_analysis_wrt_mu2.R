@@ -24,7 +24,7 @@ n2 <- 50
 
 ### Sigma1 
 B <- .85*eye(25,25) + .15*ones(25,25)
-Sig <- as.matrix(bdiag(B,B,B,B))
+#Sig <- as.matrix(bdiag(B,B,B,B))
 Sig <- kronecker(eye(8),B)
 
 N = 50 ## number of samples
