@@ -33,13 +33,14 @@ Sig <- kronecker(eye(8),B)
 N = 50 ## number of samples
 ## We run the simulation for N=100 samples
 #setup parallel backend to use 8 processors
-cl<-makeCluster(4)
+nc <- min(c(detectCores(),8))
+cl <- makeCluster(nc)
 registerDoParallel(cl)
 
 #start time
 strt<-Sys.time()
 
-res <- foreach(icount(N),.combine=rbind)%dopar%{
+res <- foreach(icount(N),.packages=c("matlab","mnormt","Matrix","MCMCpack"),.combine=rbind)%dopar%{
   require(MCMCpack)
   require(matlab)
   require(mnormt)
