@@ -38,10 +38,10 @@ registerDoParallel(cl)
 strt<-Sys.time()
 
 res <- foreach(icount(N),.packages=c("matlab","mnormt","Matrix","MCMCpack"),.combine=rbind)%dopar%{
-  require(MCMCpack)
-  require(matlab)
-  require(mnormt)
-  require(Matrix)
+#   require(MCMCpack)
+#   require(matlab)
+#   require(mnormt)
+#   require(Matrix)
   
   Nsam <- 20000
   M = 5
